@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./:/var/www/
+      - ./_docker/nginx/conf.d/:/etc/nginx/conf.d
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    container_name: app_nginx
+
+  app:
+    build:
+        context: .
+        dockerfile: _docker/app/Dockerfile
+    volumes:
+      - ./:/var/www
+    depends_on:
+        - db
+    container_name: app
+
+  db:
+      image: postgres:15rc1-alpine
+      restart: always
+      volumes:
+          - ./_docker/postgres:/var/lib/postgresql/data
+      environment:
+          POSTGRES_DB: ${DB_DATABASE}
+          POSTGRES_USER: ${DB_USERNAME}
+          POSTGRES_PASSWORD: ${DB_PASSWORD}
+          POSTGRES_HOST_AUTH_METHOD: "trust"
+          POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+      ports:
+          - "5432:5432"
+      container_name: app_db
