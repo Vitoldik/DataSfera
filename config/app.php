@@ -195,6 +195,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Регистрация своих провайдеров
+        App\Providers\ActionServiceProvider::class
     ],
 
     /*
