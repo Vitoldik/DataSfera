@@ -1,0 +1,35 @@
+:root {
+    --light: #ded034;
+    --dark: #bc9822;
+    --text: #565500;
+}
+
+.unload-button {
+    display: block;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: var(--light);
+    width: 100%;
+    height: 62px;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    background-size: 100% 100%;
+    box-shadow: 0 0 0 7px var(--light) inset;
+    margin-bottom: 15px;
+    transition: All 0.5s ease;
+}
+
+.unload-button:hover {
+    transform: scale(1.05);
+}
+
+.button-container {
+    padding-top: 20px;
+}
+
+.unload-form {
+    width: 100%;
+}

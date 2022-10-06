@@ -9,6 +9,11 @@
     <div class="ml-12">
         <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
             {{ ucfirst(str_replace('.amocrm.ru', '', $name)) }}, привет!<br>Нажмите на кнопку ниже для выгрузки сделок в базу данных Postgres
+            <div class="flex justify-center sm:justify-start button-container">
+                <form class="unload-form" method="POST" action="/api/lead">
+                    <button class="unload-button">Выгрузить сделки</button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

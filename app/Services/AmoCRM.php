@@ -6,6 +6,7 @@ use AmoCRM\Client\AmoCRMApiClient;
 use AmoCRM\Exceptions\AmoCRMoAuthApiException;
 use App\Models\Token;
 use App\Traits\TSingleton;
+use App\Utilities\CookieUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -82,6 +83,10 @@ class AmoCRM {
         }
 
         return null;
+    }
+
+    public function getTokenFromEncryptedCookie() {
+        return Token::query()->find(CookieUtils::cookieDecrypt(Cookie::get('client_token')));
     }
 
     public function getAccessTokenFromCookie(Model $token): ?AccessToken {
