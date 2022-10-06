@@ -24,7 +24,8 @@ class Company extends Model
         'created_at',
         'updated_at',
         'closest_task_at',
-        'account_id'
+        'account_id',
+        'custom_fields_values'
     ];
 
     protected $casts = [

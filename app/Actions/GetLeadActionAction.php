@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use App\Models\Lead;
 use App\Services\AmoCRM;
+use App\Utilities\StringUtils;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,7 @@ class GetLeadActionAction implements GetLeadActionContract {
 
                 foreach ($leads as $value) {
                     $lead = $value->toArray();
-                    unset($lead['custom_fields_values']);
+                    $lead['custom_fields_values'] = json_encode($lead['custom_fields_values']);
 
                     if (array_key_exists('company', $lead)) {
                         $companyId = $lead['company']['id'];
@@ -59,7 +60,7 @@ class GetLeadActionAction implements GetLeadActionContract {
                     if (!Lead::query()->where('company_id', $company['id'])->exists()) // Исключаем компании без сделок
                         continue;
 
-                    unset($company['custom_fields_values']);
+                    $company['custom_fields_values'] = json_encode($company['custom_fields_values']);
 
                     try {
                         if (Company::query()->create($company)->save())
@@ -82,7 +83,7 @@ class GetLeadActionAction implements GetLeadActionContract {
 
                     $contact['company_id'] = $companyId;
                     unset($contact['company']);
-                    unset($contact['custom_fields_values']);
+                    $contact['custom_fields_values'] = json_encode($contact['custom_fields_values']);
 
                     try {
                         if (Contact::query()->create($contact)->save())
@@ -92,8 +93,13 @@ class GetLeadActionAction implements GetLeadActionContract {
                     }
                 }
 
+                $decLead = StringUtils::getDeclinedString($leadCounter, ['сделка', 'сделки', 'сделок']);
+                $decCompany = StringUtils::getDeclinedString($companyCounter, ['компания', 'компании', 'компаний']);
+                $decContact = StringUtils::getDeclinedString($contactCounter, ['контакт', 'контакта', 'контактов']);
+
+
                 return view('unloaded_completed', [
-                    'result' => "🚀 Успешно выгружено $leadCounter сделок, $companyCounter компаний и $contactCounter контактов!"
+                    'result' => "🚀 Успешно выгружено $decLead, $decCompany и $decContact!"
                 ]);
             }
         } catch (AmoCRMApiException|AmoCRMMissedTokenException|AmoCRMoAuthApiException $ex) {

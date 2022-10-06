@@ -28,7 +28,8 @@ class Contact extends Model
         'closest_task_at',
         'account_id',
         'is_unsorted',
-        'company_id'
+        'company_id',
+        'custom_fields_values'
     ];
 
     protected $casts = [

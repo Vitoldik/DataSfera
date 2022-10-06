@@ -33,7 +33,8 @@ class Lead extends Model
         'is_deleted',
         'score',
         'account_id',
-        'company_id'
+        'company_id',
+        'custom_fields_values'
     ];
 
     protected $casts = [
