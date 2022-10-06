@@ -9,12 +9,13 @@ class Token extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'baseDomain';
+    protected $primaryKey = 'clientToken';
     public $incrementing = false;
     protected $table = 'token';
     public $timestamps = false;
 
     protected $fillable = [
+        'clientToken',
         'baseDomain',
         'accessToken',
         'refreshToken',

@@ -14,11 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('token', function (Blueprint $table) {
-            $table->string('baseDomain')->unique()->primary();
+            $table->string('baseDomain')->primary();
             $table->longText('accessToken');
             $table->longText('refreshToken');
             $table->dateTime('expires');
-
         });
     }
 
